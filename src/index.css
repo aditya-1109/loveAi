@@ -1,0 +1,139 @@
+@import "tailwindcss";
+
+
+@keyframes up-n-down {
+  0% {
+    transform: translateY(0) rotate(0deg);
+  }
+  25% {
+    transform: translateY(-10px) rotate(90deg);
+  }
+  50% {
+    transform: translateY(0) rotate(180deg);
+  }
+  75% {
+    transform: translateY(10px) rotate(270deg);
+  }
+  100% {
+    transform: translateY(0) rotate(360deg);
+  }
+}
+
+.up-n-down-animation {
+  animation: up-n-down linear infinite 3s;
+}
+
+/* @keyframes giftAnime {
+  0% {
+    transform: translateY(0) rotate(0deg);
+  }
+  12.5% {
+    transform: translateY(-2.5px) rotate(30deg);
+  }
+  25% {
+    transform: translateY(-5px) rotate(0deg);
+  }
+  37.5% {
+    transform: translateY(-7.5px) rotate(-30deg);
+  }
+  50% {
+    transform: translateY(-10px) rotate(0deg);
+  }
+  62.5% {
+    transform: translateY(-7.5px) rotate(30deg);
+  }
+  75% {
+    transform: translateY(-5px) rotate(0deg);
+  }
+  87.5% {
+    transform: translateY(-2.5px) rotate(-30deg);
+  }
+  100% {
+    transform: translateY(0px) rotate(0deg);
+  }
+} */
+
+
+.gift-animation {
+  animation: giftCycle 3s infinite ease-in-out;
+}
+
+@keyframes giftCycle {
+  0%, 100% {
+    transform: translateY(0) rotate(0deg);
+  }
+  12.5%, 62.5% {
+    transform: translateY(0) rotate(15deg);
+  }
+  37.5%, 87.5% {
+    transform: translateY(0) rotate(-15deg);
+  }
+
+  /* --- UP & DOWN (3s to 6s) --- */
+  50%   { transform: translateY(0); }
+  62.5% { transform: translateY(-10px); }
+  75%   { transform: translateY(0); }
+  87.5% { transform: translateY(-10px); }
+  100%  { transform: translateY(0); }
+}
+
+@keyframes scaleUp {
+  0% {
+    scale: 0
+  }
+  30% {
+    scale: 1.2;
+  }
+  70%{
+    scale: 1.2;
+  }
+  100% {
+    scale: 0
+  }
+}
+
+.scaleUp-animation {
+  animation: scaleUp linear infinite 3s;
+}
+
+.heart {
+  position: fixed;
+  pointer-events: none;
+  transform: translate(-50%, -50%);
+  transition: font-size 0.06s linear;
+}
+
+.heart-pop {
+  animation: pop 0.3s ease forwards;
+}
+
+@keyframes pop {
+  0% {
+    transform: translate(-50%, -50%) scale(1);
+    opacity: 1;
+  }
+  100% {
+    transform: translate(-50%, -50%) scale(0);
+    opacity: 0;
+  }
+}
+
+@keyframes moveGift {
+  0% {
+    transform: translate(0, 0) scale(1);
+  }
+  10% {
+    transform: translate(0, 0) scale(1.5);
+  }
+  70% {
+    transform: translate(-38vw, 50vh) scale(3);
+  }
+  100% {
+    transform: translate(-38vw, 50vh) scale(4);
+  }
+}
+
+
+.moveGift-animation{
+  animation: moveGift linear 3s;
+}
