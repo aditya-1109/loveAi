@@ -5,13 +5,24 @@ import CuteBear from "../assets/Cutebeardancing.json"
 import LoveAnim from "../assets/LoveAnimation.json"
 import TeddyBear from "../assets/TeddyBear.json"
 import { Star } from 'lucide-react'
+import HeartCursor from "./heart"
+import Header from './header'
+import { useSearchParams } from 'react-router-dom'
 
 
 export default function Body() {
 
-  
+ const [searchParams] = useSearchParams();
+
+  const encodedName = searchParams.get("n");
+  const encodedMessage = searchParams.get("m");
+
+  const name = encodedName ? atob(encodedName) : "";
+  const message = encodedMessage ? atob(encodedMessage) : "";
   return (
-    <div className='relative flex justify-center items-center w-full h-full'>
+    <div className='flex flex-col w-[100vw] h-[100vh]'>
+    <Header name={name} />
+    <div className='relative bg-pink-300 flex justify-center items-center w-full h-full'>
       <Lottie
         animationData={partyPopper}
         loop={true}
@@ -54,8 +65,11 @@ export default function Body() {
     font-[Poppins]
   "
       >
-        <Star color='red' scale={12} /> Happy 3 Year Anniversary <span class="font-[Great_Vibes] ml-3">Sakku</span> 
+        <Star color='red' scale={12} /> {message} <span class="font-[Great_Vibes] ml-3">{name}</span> 
       </h1>
+
+      <HeartCursor />
+    </div>
     </div>
   )
 }

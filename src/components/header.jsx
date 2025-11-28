@@ -6,7 +6,7 @@ import Lottie from 'lottie-react';
 import chocolate from "../assets/Chocolate.json"
 
 
-export default function Header() {
+export default function Header({name}) {
 
   const [showGift, setShowGift] = useState(false);
   const [showChoco, setShowChoco] = useState(false)
@@ -49,7 +49,7 @@ export default function Header() {
     <div className='w-full flex flex-row justify-between items-center p-2 px-4 bg-gradient-to-r from-red-400 via-white to-red-400'>
       <div className='rounded-full p-2 flex items-center justify-center flex-row bg-gradient-to-t from-red-200 via-white to-red-200'>
 
-        <h1 className='font-bold flex flex-row justify-center items-center text-red-950 text-2xl'>S<span><Heart color='red' className='up-n-down-animation' /></span>kku</h1>
+        <h1 className='font-bold flex flex-row justify-center items-center text-red-950 text-2xl'><span><Heart color='red' className='up-n-down-animation' /></span>{name}</h1>
 
 
       </div>
