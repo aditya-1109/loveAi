@@ -6,7 +6,7 @@ import Lottie from 'lottie-react';
 import chocolate from "../assets/Chocolate.json"
 
 
-export default function Header({name}) {
+export default function Header({ name, showgif, onClick }) {
 
   const [showGift, setShowGift] = useState(false);
   const [showChoco, setShowChoco] = useState(false)
@@ -60,13 +60,13 @@ export default function Header({name}) {
           animationData={giftbox}
           loop={false}
           autoplay={false}
-          className="fixed w-100 top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 z-30"
+          className="fixed w-100 top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 z-40"
           onDOMLoaded={() => {
             const inst = gifRef.current;
             if (inst) {
-              const totalFrames = inst.getDuration(true); 
-              inst.setSpeed(-1);                          
-              inst.goToAndPlay(totalFrames, true);       
+              const totalFrames = inst.getDuration(true);
+              inst.setSpeed(-1);
+              inst.goToAndPlay(totalFrames, true);
             }
           }}
         />
@@ -77,14 +77,37 @@ export default function Header({name}) {
           animationData={chocolate}
           loop={false}
           autoPlay={true}
-          className="fixed w-80 top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2"
+          className="fixed w-80 z-40 top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2"
 
         />
       }
 
-      {showGift ?
-        <img src='/image.png' className='moveGift-animation z-30 fixed w-10 right-10' alt='gift' />
-        : <img onClick={() => setShowGift(true)} src='/image.png' className='gift-animation w-10' />}
+      {
+        showGift ? (
+          <img
+            src="/image.png"
+            className="moveGift-animation z-40 fixed w-10 right-10"
+            alt="gift"
+          />
+        ) : showgif ? (
+          <img
+            src="/openBox.png"
+            className="w-12"
+            alt="open box"
+          />
+        ) : (
+          <img
+            onClick={() => {
+              setShowGift(true);
+              onClick();
+            }}
+            src="/image.png"
+            className="gift-animation w-10"
+            alt="gift"
+          />
+        )
+      }
+
     </div>
   )
 }
