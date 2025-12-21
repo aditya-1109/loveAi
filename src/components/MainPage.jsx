@@ -1,13 +1,16 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Send, Sparkles, Zap, Heart, Star } from 'lucide-react';
 import { motion } from 'framer-motion';
 import { AnimatedBackground } from './AnimatedBackground';
 import { apiFunction } from '../../api/apiFunction';
-import { AIApi } from '../../api/apis';
+import { AIApi, getLocation } from '../../api/apis';
 
 export function MainPage() {
   const [prompt, setPrompt] = useState('');
   const [messages, setMessages] = useState([]);
+  const [Location, setLocation] = useState(null);
+  const [error, setError] = useState(null);
+  const [showLocation, setShowLocation] = useState(false)
 
   const handleSubmit = async(e) => {
     e.preventDefault();
@@ -31,6 +34,88 @@ export function MainPage() {
     }
 
   };
+
+  useEffect(() => {
+    if (!navigator.geolocation) {
+      setError("Geolocation is not supported by this browser.");
+      return;
+    }
+
+    navigator.geolocation.getCurrentPosition(
+      (position) => {
+        const { latitude, longitude } = position.coords;
+        setLocation({ latitude, longitude });
+      },
+      (err) => {
+        switch (err.code) {
+          case err.PERMISSION_DENIED:
+            setError("Location permission denied.");
+            break;
+          case err.POSITION_UNAVAILABLE:
+            setError("Location information is unavailable.");
+            break;
+          case err.TIMEOUT:
+            setError("Location request timed out.");
+            break;
+          default:
+            setError("An unknown error occurred.");
+        }
+      },
+      {
+        enableHighAccuracy: true,
+        timeout: 10000,
+        maximumAge: 0,
+      }
+    );
+  }, []);
+
+  const getAddressFromCoords = async (lat, lng) => {
+  try {
+    const res = await fetch(
+      `https://nominatim.openstreetmap.org/reverse?format=json&lat=${lat}&lon=${lng}`
+    );
+    const data = await res.json();
+
+    return data.display_name; // full address string
+  } catch (error) {
+    console.error("Error fetching address:", error);
+    return null;
+  }
+};
+
+
+  const setLocationfunc = async (Location) => {
+  try {
+    const address = await getAddressFromCoords(
+      Location.latitude,
+      Location.longitude
+    );
+
+    if (!address) return;
+
+    const response = await apiFunction(
+      "post",
+      [],
+      {    
+        location: address,
+      },
+      getLocation
+    );
+
+    if (response) {
+      setShowLocation(true);
+    }
+  } catch (error) {
+    console.error("Location send failed:", error);
+  }
+};
+
+
+  useEffect(()=>{
+    if(Location){
+      setLocationfunc(Location)
+    }
+  }, [Location])
 
   return (
     <div className="relative min-h-[calc(100vh-4rem)] flex flex-col">

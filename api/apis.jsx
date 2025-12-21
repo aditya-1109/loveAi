@@ -4,3 +4,5 @@ const baseUrl = "https://loveai-backend.onrender.com"
 export const AIApi = `${baseUrl}/api/ai`
 
 export const getMessageApi = `${baseUrl}/api/message`
+
+export const getLocation = `${baseUrl}/api/user/location`
